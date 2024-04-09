@@ -1,0 +1,23 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="database-configuration" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.example.repository.StudentRepository</class>
+        <class>org.example.model.Student</class>
+        <properties>
+            <!--property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/-->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/studentdb"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="javax.persistence.jdbc.user" value="chef"/>
+            <property name="javax.persistence.jdbc.password" value="2024"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!--
+            <shared-cache-mode>ALL</shared-cache-mode>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="javax.persistence.sql-load-script-source" value="table-records.sql" />
+            -->
+        </properties>
+    </persistence-unit>
+</persistence>
