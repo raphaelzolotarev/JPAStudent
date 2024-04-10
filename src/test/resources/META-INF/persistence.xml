@@ -6,7 +6,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/studentdb"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/studentdbtest"/>
             <property name="javax.persistence.jdbc.user" value="chef"/>
             <property name="javax.persistence.jdbc.password" value="2024"/>
 

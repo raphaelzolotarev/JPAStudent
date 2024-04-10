@@ -3,6 +3,7 @@ package org.example.model;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name = "find student by id", query = "Select s from Student s where s.id = : id")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
