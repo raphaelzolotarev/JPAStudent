@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.model.School;
 import org.example.model.Student;
+import org.example.model.Teacher;
 import org.example.model.Tutor;
 import org.example.repository.SchoolRepository;
 import org.example.repository.StudentRepository;
@@ -100,7 +101,8 @@ public class Main {
         school=schoolRepository.find(school.getId());
         school.getStudents().forEach(System.out::println);
 
-
+        System.out.println("\n #17");
+        Teacher teacher = new Teacher("Mary", "Bos");
 
 
 

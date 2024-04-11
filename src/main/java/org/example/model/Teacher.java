@@ -1,6 +1,7 @@
 package org.example.model;
 
 import javax.persistence.*;
+import javax.swing.plaf.basic.BasicTreeUI;
 
 @Entity
 public class Teacher {
@@ -12,11 +13,21 @@ public class Teacher {
     @Column(name = "lastname", nullable = false, length = 250)
     private String lastname;
 
+    @ManyToOne
+    private School school;
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
     public Teacher() {
     }
 
-    public Teacher(long id, String firstname, String lastname) {
-        this.id = id;
+    public Teacher(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -51,6 +62,7 @@ public class Teacher {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", school=" + school +
                 '}';
     }
 }
