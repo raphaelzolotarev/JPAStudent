@@ -1,6 +1,8 @@
 package org.example.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NamedQuery(name = "find student by id", query = "Select s from Student s where s.id = : id")
@@ -18,6 +20,8 @@ public class Student {
 
     @OneToOne
     private Tutor tutor;
+    @ManyToMany(mappedBy = "students")
+    private Set<Teacher> teachers = new HashSet<>();
 
     public Student() {
     }
@@ -67,6 +71,14 @@ public class Student {
         this.tutor = tutor;
     }
 
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -75,6 +87,7 @@ public class Student {
                 ", lastname='" + lastname + '\'' +
                 ", school=" + school +
                 ", tutor=" + tutor +
+                ", teachers=" + teachers +
                 '}';
     }
 }

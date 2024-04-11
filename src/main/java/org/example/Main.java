@@ -6,6 +6,7 @@ import org.example.model.Teacher;
 import org.example.model.Tutor;
 import org.example.repository.SchoolRepository;
 import org.example.repository.StudentRepository;
+import org.example.repository.TeacherRepository;
 import org.example.repository.TutorRepository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Main {
         StudentRepository studentRepository = new StudentRepository();
         SchoolRepository schoolRepository = new SchoolRepository();
         TutorRepository tutorRepository = new TutorRepository();
+        TeacherRepository teacherRepository = new TeacherRepository();
 
         System.out.println("\n #1");
         Student student = new Student("Alain", "Red");
@@ -97,12 +99,31 @@ public class Main {
         school2.getStudents().forEach(System.out::println);
 
         System.out.println("\n #17");
-        schoolRepository.removeStudent(student.getId(), student);
+        /*schoolRepository.removeStudent(student.getId(), student);
         school=schoolRepository.find(school.getId());
-        school.getStudents().forEach(System.out::println);
+        school.getStudents().forEach(System.out::println);*/
 
-        System.out.println("\n #17");
+        System.out.println("\n #18");
         Teacher teacher = new Teacher("Mary", "Bos");
+        teacherRepository.add(teacher);
+        teacher.setSchool(school);
+        System.out.println("Added teacher "+teacher);
+        Teacher teacher2 = new Teacher("Jon", "Smith");
+        teacherRepository.add(teacher2);
+        teacher2.setSchool(school);
+        System.out.println("Added teacher "+teacher2);
+
+        System.out.println("\n #19");
+        Teacher teacher3 = new Teacher("Tom", "Ford");
+        Student s1 = new Student("Lora","Mopu");
+        Student s2 = new Student("Jean","Kjol");
+        teacher3.addStudent(s1);
+        teacher3.addStudent(s2);
+        teacherRepository.add(teacher);
+        System.out.println("Added teacher "+teacher3);
+        System.out.println("Added student "+s1);
+        System.out.println("Added student "+s2);
+
 
 
 
