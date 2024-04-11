@@ -3,8 +3,7 @@ package org.example.model;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "find student by id", query = "Select s from Student s where s.id = : id")
-public class Student {
+public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -13,16 +12,8 @@ public class Student {
     @Column(name = "lastname", nullable = false, length = 250)
     private String lastname;
 
-    @OneToOne
-    private School school;
-
-    @OneToOne
-    private Tutor tutor;
-
-    public Student() {
-    }
-
-    public Student(String firstname, String lastname) {
+    public Tutor(){}
+    public Tutor(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -51,30 +42,12 @@ public class Student {
         this.lastname = lastname;
     }
 
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
-    }
-
-    public Tutor getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
-    }
-
     @Override
     public String toString() {
-        return "Student{" +
+        return "Tutor{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", school=" + school +
-                ", tutor=" + tutor +
                 '}';
     }
 }
