@@ -126,6 +126,11 @@ public class Main {
 
 
 
+        //close
+        studentRepository.closeDb();
+        schoolRepository.closeDb();
+        teacherRepository.closeDb();
+        tutorRepository.closeDb();
 
     }
 }
