@@ -12,20 +12,22 @@ public class TeacherRepository {
 
     public TeacherRepository(){
         this.emf = Persistence.createEntityManagerFactory("database-configuration");
-        this.entityManager = this.emf.createEntityManager();
+        entityManager = emf.createEntityManager();
     }
 
 
     //ADD
     public Teacher add(Teacher teacher){
         entityManager.getTransaction().begin();
-        entityManager.persist(teacher);
+        entityManager.merge(teacher);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return teacher;
     }
 
     //FIND
     public Teacher find(Long id){
+        entityManager.clear();
         return entityManager.find(Teacher.class, id);
     }
 
@@ -36,6 +38,7 @@ public class TeacherRepository {
         teacherToUpdate.setFirstname(teacher.getFirstname());
         teacherToUpdate.setLastname(teacher.getLastname());
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return teacherToUpdate;
     }
 
@@ -44,12 +47,13 @@ public class TeacherRepository {
         entityManager.getTransaction().begin();
         entityManager.remove(teacher);
         entityManager.getTransaction().commit();
+        entityManager.clear();
     }
 
     //CLOSE CONNECTION
-    public void closeDb(){
-        emf.close();
+    public void closeConnection(){
         entityManager.close();
+        emf.close();
     }
 
 

@@ -13,7 +13,7 @@ public class SchoolRepository {
 
     public SchoolRepository(){
         this.emf = Persistence.createEntityManagerFactory("database-configuration");
-        this.entityManager = this.emf.createEntityManager();
+        entityManager = emf.createEntityManager();
     }
 
 
@@ -22,6 +22,7 @@ public class SchoolRepository {
         entityManager.getTransaction().begin();
         entityManager.persist(school);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return school;
     }
     public void addStudent(long id, Student student){
@@ -32,10 +33,12 @@ public class SchoolRepository {
         }
         entityManager.persist(school);
         entityManager.getTransaction().commit();
+        entityManager.clear();
     }
 
     //FIND
-    public School find(Long id){
+    public School find(long id){
+        entityManager.clear();
         return entityManager.find(School.class, id);
     }
 
@@ -46,6 +49,7 @@ public class SchoolRepository {
         schoolToUpdate.setName(school.getName());
         schoolToUpdate.setCity(school.getCity());
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return schoolToUpdate;
     }
 
@@ -54,8 +58,8 @@ public class SchoolRepository {
         entityManager.getTransaction().begin();
         entityManager.remove(school);
         entityManager.getTransaction().commit();
-    }
-    public void removeStudent(long id, Student student){
+        entityManager.clear();
+    }public void removeStudent(long id, Student student){
         entityManager.getTransaction().begin();
         School school = find(id);
         if(school != null){
@@ -66,9 +70,9 @@ public class SchoolRepository {
     }
 
     //CLOSE CONNECTION
-    public void closeDb(){
-        emf.close();
+    public void closeConnection(){
         entityManager.close();
+        emf.close();
     }
 
 

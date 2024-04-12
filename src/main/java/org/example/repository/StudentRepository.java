@@ -13,7 +13,7 @@ public class StudentRepository {
 
     public StudentRepository(){
         this.emf = Persistence.createEntityManagerFactory("database-configuration");
-        this.entityManager = this.emf.createEntityManager();
+        entityManager = emf.createEntityManager();
     }
 
 
@@ -22,6 +22,7 @@ public class StudentRepository {
         entityManager.getTransaction().begin();
         entityManager.persist(student);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return student;
     }
     public Student addSchool(long id, School school){
@@ -29,6 +30,7 @@ public class StudentRepository {
         Student student = find(id);
         student.setSchool(school);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return student;
     }
     public Student addTutor(long id, Tutor tutor){
@@ -36,50 +38,59 @@ public class StudentRepository {
         Student student = find(id);
         student.setTutor(tutor);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return student;
     }
 
 
     //FIND
     public Student find(Long id){
+        entityManager.clear();
         return entityManager.find(Student.class, id);
+
     }
     public Student findById(Long id){
         Query query = entityManager.createNamedQuery("find student by id");
         query.setParameter("id", id);
+        entityManager.clear();
         return (Student) query.getSingleResult();
     }
     public List<String> findFirstNames(){
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery("Select s.firstname from Student s");
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return query.getResultList();
     }
     public List<String> findLastNames(){
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery("Select s.lastname from Student s");
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return query.getResultList();
     }
     //FIND FILTER
     public List<Student> findFirstNamesStartWith(String word){
         Query query = entityManager.createQuery("Select s from Student s where firstname like '"+word+"%'");
+        entityManager.clear();
         return query.getResultList();
     }
     public List<Student> findLastNamesEndWith(String word){
         Query query = entityManager.createQuery("Select s from Student s where lastname like '%"+word+"'");
+        entityManager.clear();
         return query.getResultList();
     }
     //FIND SORT
     public List<Student> findSortingByFirstName(){
         Query query = entityManager.createQuery("Select s from Student s order by firstname desc");
+        entityManager.clear();
         return query.getResultList();
     }
     public List<Student> findSortingById(){
         Query query = entityManager.createQuery("Select s from Student s order by id desc");
+        entityManager.clear();
         return query.getResultList();
     }
-
 
     //UPDATE
     public Student update(Student student){
@@ -89,6 +100,7 @@ public class StudentRepository {
         studentToUpdate.setLastname(student.getLastname());
         //entityManager.merge(student);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return studentToUpdate;
     }
     public Student updateFirstNameById(String firstName, long id){
@@ -112,28 +124,32 @@ public class StudentRepository {
     //DELETE
     public void delete(Student student){
         entityManager.getTransaction().begin();
-        entityManager.remove(student);
+        Student attachedStudent = entityManager.merge(student);
+        entityManager.remove(attachedStudent);
         entityManager.getTransaction().commit();
+        entityManager.clear();
     }
     public void deleteById(long id){
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery("Delete from Student where id="+id);
         query.executeUpdate();
         entityManager.getTransaction().commit();
+        entityManager.clear();
     }
 
 
     //COUNT
     public Long count(){
         Query query = entityManager.createQuery("Select count(s) from Student s");
+        entityManager.clear();
         return (Long)query.getSingleResult();
     }
 
 
     //CLOSE CONNECTION
-    public void closeDb(){
-        emf.close();
+    public void closeConnection(){
         entityManager.close();
+        emf.close();
     }
 
 

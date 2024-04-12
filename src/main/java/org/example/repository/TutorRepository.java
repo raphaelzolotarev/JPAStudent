@@ -13,7 +13,7 @@ public class TutorRepository {
 
     public TutorRepository(){
         this.emf = Persistence.createEntityManagerFactory("database-configuration");
-        this.entityManager = this.emf.createEntityManager();
+        entityManager = emf.createEntityManager();
     }
 
 
@@ -22,12 +22,13 @@ public class TutorRepository {
         entityManager.getTransaction().begin();
         entityManager.persist(school);
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return school;
     }
 
     //FIND
     public Tutor find(Long id){
-        return entityManager.find(Tutor.class, id);
+        entityManager.clear();return entityManager.find(Tutor.class, id);
     }
 
     //UPDATE
@@ -37,6 +38,7 @@ public class TutorRepository {
         tutorToUpdate.setFirstname(tutor.getFirstname());
         tutorToUpdate.setLastname(tutor.getLastname());
         entityManager.getTransaction().commit();
+        entityManager.clear();
         return tutorToUpdate;
     }
 
@@ -45,12 +47,13 @@ public class TutorRepository {
         entityManager.getTransaction().begin();
         entityManager.remove(tutor);
         entityManager.getTransaction().commit();
+        entityManager.clear();
     }
 
     //CLOSE CONNECTION
-    public void closeDb(){
-        emf.close();
+    public void closeConnection(){
         entityManager.close();
+        emf.close();
     }
 
 
